@@ -38,11 +38,6 @@ export function LoginPage() {
     navigate("/dashboard", { replace: true });
   };
 
-  const handleVisor3D = () => {
-    demoLogin("admin"); 
-    navigate("/visor-3d", { replace: true });
-  };
-
   const handleCalculadora = () => {
     demoLogin("admin");
     navigate("/calculadora", { replace: true });
@@ -89,18 +84,18 @@ export function LoginPage() {
               
               <button 
                 type="button" 
-                onClick={handleVisor3D}
-                style={{ width: '100%', padding: '12px', borderRadius: '8px', backgroundColor: '#0056b3', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}
-              >
-                Visor 3D
-              </button>
-              
-              <button 
-                type="button" 
                 onClick={handleCalculadora}
                 style={{ width: '100%', padding: '12px', borderRadius: '8px', backgroundColor: '#2a2a35', color: '#fff', border: '1px solid #3f3f4e', cursor: 'pointer', fontWeight: '500' }}
               >
                 Calculadora
+              </button>
+              
+              <button 
+                type="button" 
+                onClick={() => window.open('https://prueba3d.onrender.com/', '_blank')}
+                style={{ width: '100%', padding: '12px', borderRadius: '8px', backgroundColor: '#0056b3', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}
+              >
+                Visor 3D
               </button>
               
               <button 
