@@ -32,11 +32,11 @@ const ICONS = {
 
 const items = [
   { to: "/dashboard", label: "Dashboard", icon: ICONS.dashboard },
-  { to: "/rem", label: "REM", icon: ICONS.rem },
+  { to: "/rem", label: "REM", icon: ICONS.rem, exact: true },
   { to: "/rem/oportunidad-hospitalizacion", label: "Oportunidad Hospitalización", icon: ICONS.oportunidad },
   { to: "/indicadores/servicios", label: "Servicios Clínicos", icon: ICONS.indicadoresServicios },
   { to: "/camas", label: "Camas", icon: ICONS.camas },
-  { to: "/indicadores", label: "Indicadores", icon: ICONS.indicadores },
+  { to: "/indicadores", label: "Indicadores", icon: ICONS.indicadores, exact: true },
   { to: "/configuracion", label: "Configuración", icon: ICONS.config },
 ];
 
@@ -119,6 +119,7 @@ export function AppShell({ title, status = "En tiempo real", children, actions }
               <li key={item.to} className="menu-item" style={{ animationDelay: `${index * 0.04}s` }}>
                 <NavLink
                   to={item.to}
+                  end={item.exact}
                   className={({ isActive }) => `menu-link ${isActive ? "active" : ""}`}
                   onClick={() => setMenuOpen(false)}
                 >
