@@ -1,12 +1,20 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "../components/AppShell";
 import { ChartCanvas } from "../components/ChartCanvas";
 import { MONTH_OPTIONS, monthLabel } from "../lib/data";
-import {
-  HOSPITALIZATION_DATA,
-  HOSPITALIZATION_INDICATOR,
-  HOSPITALIZATION_TARGET,
-} from "../lib/oportunidadHospitalizacionData";
+import { getOportunidadHospitalizacion } from "../lib/api";
+
+const HOSPITALIZATION_TARGET = 85;
+
+const HOSPITALIZATION_INDICATOR = {
+  name: "Porcentaje de pacientes con indicacion de hospitalizacion desde UEH que acceden a cama de dotacion en menos de 12 horas",
+  meta: ">= 85%",
+  numerator: "Total de pacientes con indicacion de hospitalizacion que espera en UEH adulta y pediatrica menos de 12 horas para acceder a cama de dotacion en el mes de evaluacion.",
+  denominator: "Total de pacientes con indicacion de hospitalizacion en UEH adulta y pediatrica en el mes de evaluacion.",
+  formula: "(Total de pacientes con indicacion de hospitalizacion que espera en UEH menos de 12 horas para acceder a cama de dotacion en el periodo / Total de pacientes con indicacion de hospitalizacion en UEH en el periodo) x 100.",
+  establishment: "Hospital San Jose (Melipilla)",
+  service: "UEH adulta y pediatrica",
+};
 
 const CHART_COLORS = {
   "2023": "#2563eb",
@@ -25,7 +33,22 @@ function calculateCompliance(p1, p2) {
 export function OportunidadHospitalizacionPage() {
   const [year, setYear] = useState("2025");
   const [month, setMonth] = useState("");
+  const [data, setData] = useState(null);
   const [establishment, setEstablishment] = useState(HOSPITALIZATION_INDICATOR.establishment);
+
+  useEffect(() => {
+    getOportunidadHospitalizacion().then(setData).catch(() => setData([]));
+  }, []);
+
+  const HOSPITALIZATION_DATA = useMemo(() => {
+    if (!data) return [];
+    return data.map((item) => ({
+      month: String(item.month).padStart(2, "0"),
+      year: String(item.year),
+      p1: item.p1,
+      p2: item.p2,
+    }));
+  }, [data]);
 
   const years = [...new Set(HOSPITALIZATION_DATA.map((item) => item.year))];
 
@@ -126,6 +149,8 @@ export function OportunidadHospitalizacionPage() {
       })),
     };
   }, [year, years]);
+
+  if (!data) return <AppShell title="Oportunidad de Hospitalización">Cargando...</AppShell>;
 
   return (
     <AppShell

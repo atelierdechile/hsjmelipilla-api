@@ -1,10 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "../components/AppShell";
 import { ChartCanvas } from "../components/ChartCanvas";
-import {
-  INDICADORES_SERVICIOS_META,
-  indicadoresServicios,
-} from "../lib/indicadoresServiciosDataset";
+import { getServiciosGrd } from "../lib/api";
 
 function percent(value, digits = 1) {
   return `${(value * 100).toFixed(digits)}%`;
@@ -26,6 +23,40 @@ function compactNumber(value, digits = 1) {
 
 export function IndicadoresServiciosClinicosPage() {
   const [selectedService, setSelectedService] = useState("");
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    getServiciosGrd().then(setData).catch(() => setData([]));
+  }, []);
+
+  const indicadoresServicios = useMemo(() => {
+    if (!data) return [];
+    return data.map((item) => ({
+      code: item.servicio_codigo,
+      servicio: item.servicio_nombre,
+      egresos: item.egresos,
+      pctEgresos: item.pct_egresos,
+      pesoGrd: item.peso_grd,
+      inliersPct: item.inliers_pct,
+      outliersPct: item.outliers_pct,
+      mortalidadPct: item.mortalidad_pct,
+      estadaMedia: item.estada_media,
+      emNorma: item.em_norma,
+      estadaInliers: item.estada_inliers,
+      emafInlier: item.emaf_inlier,
+      emacInlier: item.emac_inlier,
+      iemaInlier: item.iema_inlier,
+      ifInlier: item.if_inlier,
+      icInlier: item.ic_inlier,
+      estanciasEvitables: item.estancias_evitables || 0,
+      estadaOutliers: item.estada_outliers,
+      outliersStayPct: item.outliers_stay_pct,
+    }));
+  }, [data]);
+
+  const INDICADORES_SERVICIOS_META = { year: "2025", periodLabel: "Enero a diciembre", hospital: "Hospital San José (Melipilla)" };
+
+  if (!data) return <AppShell title="Indicadores Servicios Clinicos">Cargando...</AppShell>;
 
   const sortedByEgresos = useMemo(
     () => [...indicadoresServicios].sort((left, right) => right.egresos - left.egresos),

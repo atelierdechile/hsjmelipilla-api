@@ -1,12 +1,29 @@
 // src/pages/IndicadoresServiciosPage.jsx
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "../components/AppShell";
 import { ChartCanvas } from "../components/ChartCanvas";
-import { indicadoresServicios } from "../lib/indicadoresServiciosData";
+import { getServiciosGrd } from "../lib/api";
 
 export function IndicadoresServiciosPage() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    getServiciosGrd().then(setData).catch(() => setData([]));
+  }, []);
+
+  const indicadoresServicios = useMemo(() => {
+    if (!data) return [];
+    return data.map((item) => ({
+      servicio: item.servicio_nombre,
+      egresos: item.egresos,
+      pctEgresos: +((item.pct_egresos * 100).toFixed(2)),
+      pesoGrd: item.peso_grd,
+      mortalidad: +((item.mortalidad_pct * 100).toFixed(2)),
+      estadaMedia: item.estada_media,
+    }));
+  }, [data]);
+
   const chartData = useMemo(() => {
-    // Ordenamos de mayor a menor egreso para el gráfico
     const sorted = [...indicadoresServicios].sort((a, b) => b.egresos - a.egresos);
     return {
       labels: sorted.map((item) => item.servicio),
@@ -18,7 +35,9 @@ export function IndicadoresServiciosPage() {
         },
       ],
     };
-  }, []);
+  }, [indicadoresServicios]);
+
+  if (!data) return <AppShell title="Indicadores Servicios Clinicos" status="Datos 2025">Cargando...</AppShell>;
 
   return (
     <AppShell title="Indicadores Servicios Clínicos" status="Datos 2025">

@@ -42,3 +42,11 @@ export function updateCama(id, data) {
 export function getServicios() {
   return request("/servicios/");
 }
+
+export function getServiciosGrd(filters = "") {
+  return request(`/servicios-grd/${filters}`);
+}
+
+export function getOportunidadHospitalizacion(filters = "") {
+  return request(`/oportunidad-hospitalizacion/${filters}`);
+}
