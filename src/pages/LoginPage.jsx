@@ -53,20 +53,20 @@ export function LoginPage() {
       </div>
 
       <div className="login-content">
-        <div className="login-hero">
-          <div className="hero-content">
-            <div className="hero-badge">Hospital San Jose</div>
-            <h1>Plataforma de Gestion Hospitalaria</h1>
-            <p>Monitoreo de camas, indicadores clinicos y optimizacion de procesos asistenciales en tiempo real.</p>
-            <div className="hero-stats">
-              <div className="stat-card"><span className="stat-value">+450</span><span className="stat-label">Camas</span></div>
-              <div className="stat-card"><span className="stat-value">85%</span><span className="stat-label">Ocupacion</span></div>
-              <div className="stat-card"><span className="stat-value">24/7</span><span className="stat-label">Monitoreo</span></div>
+        <div className="login-grid">
+          <div className="login-hero">
+            <div className="hero-content">
+              <div className="hero-badge">Hospital San Jose</div>
+              <h1>Plataforma de Gestion Hospitalaria</h1>
+              <p>Monitoreo de camas, indicadores clinicos y optimizacion de procesos asistenciales en tiempo real.</p>
+              <div className="hero-stats">
+                <div className="stat-card"><span className="stat-value">+450</span><span className="stat-label">Camas</span></div>
+                <div className="stat-card"><span className="stat-value">85%</span><span className="stat-label">Ocupacion</span></div>
+                <div className="stat-card"><span className="stat-value">24/7</span><span className="stat-label">Monitoreo</span></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="login-panel">
           <div className="login-card">
             <div className="login-card-header">
               <div className="login-icon">
