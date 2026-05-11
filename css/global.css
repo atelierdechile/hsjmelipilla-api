@@ -563,6 +563,16 @@ button:focus-visible {
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
 }
 
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 6px;
+}
+
+.table-wrap table {
+  min-width: max-content;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -756,5 +766,33 @@ td {
   .main {
     padding: 12px;
     padding-top: 64px;
+  }
+
+  .topbar-heading h1 {
+    font-size: 16px;
+  }
+
+  .topbar-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .topbar-tools {
+    gap: 8px;
+  }
+
+  .theme-toggle-label {
+    display: none;
+  }
+
+  .theme-toggle {
+    padding: 6px;
+    min-height: 40px;
+    gap: 0;
+  }
+
+  .chart-container {
+    height: 220px !important;
   }
 }

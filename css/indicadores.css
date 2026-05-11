@@ -749,6 +749,18 @@ canvas {
   .card-calculadora {
     padding: 12px;
   }
+
+  .indicator-box {
+    padding: 16px;
+  }
+
+  .indicator-box h2 {
+    font-size: 24px;
+  }
+
+  .chart-container {
+    height: 200px;
+  }
 }
 
 /* ========================= */

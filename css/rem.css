@@ -331,6 +331,35 @@ body.dark .nivel-Crítico { background: rgba(239, 68, 68, 0.16); color:#fca5a5; 
     grid-template-columns:1fr;
   }
 }
+
+@media(max-width:600px){
+  .topbar{
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .filters{
+    flex-direction:column;
+  }
+
+  .filters select{
+    width:100%;
+  }
+
+  .chart-container{
+    height:200px;
+  }
+
+  .chart-donut-container{
+    height:180px;
+    max-width:260px;
+  }
+
+  .sidebar-glosas{
+    max-height:none;
+    position:static;
+  }
+}
 .fade-in {
   animation: fadeInUp 0.5s ease;
 }

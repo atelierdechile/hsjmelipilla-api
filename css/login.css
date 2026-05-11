@@ -487,3 +487,41 @@
     padding: 32px 24px;
   }
 }
+
+@media (max-width: 480px) {
+  .login-content {
+    padding: 12px;
+  }
+
+  .login-card {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+
+  .login-card-header {
+    margin-bottom: 20px;
+  }
+
+  .login-card-header h2 {
+    font-size: 18px;
+  }
+
+  .login-form {
+    gap: 12px;
+  }
+
+  .input-wrapper input {
+    padding: 11px 14px 11px 38px;
+    font-size: 13px;
+  }
+
+  .btn-primary {
+    padding: 11px;
+    font-size: 13px;
+  }
+
+  .quick-access {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+}
