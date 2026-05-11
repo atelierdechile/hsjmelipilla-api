@@ -130,27 +130,13 @@
 /* ========================= */
 /* PAGE TRANSITIONS */
 /* ========================= */
-.page-transition {
-  animation-duration: 0.35s;
-  animation-fill-mode: both;
+.page-fade-in {
+  animation: pageFadeIn 0.3s ease both;
 }
 
-.page-transition.page-enter {
-  animation-name: pageIn;
-}
-
-.page-transition.page-exit {
-  animation-name: pageOut;
-}
-
-@keyframes pageIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pageOut {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-8px); }
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* ========================= */
