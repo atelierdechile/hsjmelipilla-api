@@ -32,7 +32,7 @@ export default function GaugeChart({ value }) {
         <path
           d="M 20 100 A 80 80 0 0 1 180 100"
           fill="none"
-          stroke="rgba(255,255,255,0.06)"
+          className="gauge-track"
           strokeWidth="14"
           strokeLinecap="round"
         />
