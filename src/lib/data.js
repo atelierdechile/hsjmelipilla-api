@@ -1,5 +1,19 @@
 import { getNiveles } from "./api";
 
+const GLOSAS_BASE = [
+  { titulo: "Días Cama Disponibles", clave: "dias_cama_disponibles", descripcion: "Total de días disponibles." },
+  { titulo: "Días Cama Ocupados", clave: "dias_cama_ocupados", descripcion: "Total de días ocupados." },
+  { titulo: "Días de Estada", clave: "dias_estada", descripcion: "Días de hospitalización." },
+  { titulo: "Promedio Cama Disponibles", clave: "promedio_camas", descripcion: "Promedio de camas disponibles." },
+  { titulo: "Número de Egresos", clave: "numero_egresos", descripcion: "Total de egresos." },
+  { titulo: "Egresos Fallecidos", clave: "fallecidos", descripcion: "Pacientes fallecidos." },
+  { titulo: "Índice Ocupacional", clave: "indice_ocupacional", descripcion: "Porcentaje de ocupación." },
+  { titulo: "Promedio Días de Estada", clave: "promedio_estada", descripcion: "Promedio de días de hospitalización." },
+  { titulo: "Letalidad", clave: "letalidad", descripcion: "Porcentaje de fallecidos." },
+  { titulo: "Índice de Rotación", clave: "indice_rotacion", descripcion: "Rotación de camas." },
+  { titulo: "Traslados", clave: "traslados", descripcion: "Pacientes trasladados." },
+];
+
 export async function fetchHospitalData() {
   const niveles = await getNiveles();
   return {
@@ -17,6 +31,7 @@ export async function fetchHospitalData() {
         dias_estada: e.dias_estada,
       })),
     })),
+    glosas_base: GLOSAS_BASE,
   };
 }
 
