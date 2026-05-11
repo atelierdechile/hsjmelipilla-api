@@ -1,7 +1,23 @@
+import { getNiveles } from "./api";
+
 export async function fetchHospitalData() {
-  const response = await fetch("/data/rem.json");
-  if (!response.ok) throw new Error("No se pudo cargar rem.json");
-  return response.json();
+  const niveles = await getNiveles();
+  return {
+    niveles: niveles.map((n) => ({
+      codigo: n.codigo,
+      nombre: n.nombre,
+      nivel_cuidado: { tipo: n.tipo, color: n.color },
+      egresos: n.egresos.map((e) => ({
+        mes: e.mes.slice(0, 7),
+        altas: e.altas,
+        traslados: e.traslados,
+        fallecidos: e.fallecidos,
+        dias_cama_disponibles: e.dias_cama_disponibles,
+        dias_cama_ocupados: e.dias_cama_ocupados,
+        dias_estada: e.dias_estada,
+      })),
+    })),
+  };
 }
 
 export const MONTH_OPTIONS = [

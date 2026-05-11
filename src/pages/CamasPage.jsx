@@ -1,17 +1,30 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "../components/AppShell";
+import { getCamas, createCama, updateCama } from "../lib/api";
 
-const initialBeds = [
-  { id: "101", servicio: "UCI", estado: "ocupada", nivel: "alta", paciente: "Juan Perez" },
-  { id: "102", servicio: "Cirugia", estado: "disponible", nivel: "media", paciente: "-" },
-  { id: "103", servicio: "Pediatria", estado: "limpieza", nivel: "baja", paciente: "-" },
-  { id: "104", servicio: "Maternidad", estado: "disponible", nivel: "media", paciente: "-" },
-];
+function mapCama(item) {
+  return {
+    id: String(item.id),
+    servicio: item.servicio_nombre || `Servicio ${item.servicio}`,
+    estado: item.estado?.toLowerCase() || "disponible",
+    nivel: item.nivel_cuidado?.toLowerCase() || "media",
+    paciente: item.paciente_nombre || "-",
+    _api: item,
+  };
+}
 
 export function CamasPage() {
-  const [beds, setBeds] = useState(initialBeds);
+  const [beds, setBeds] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedBed, setSelectedBed] = useState(null);
   const [form, setForm] = useState({ nombre: "", edad: "", peso: "", nivel: "media", cama: "" });
+
+  useEffect(() => {
+    getCamas()
+      .then((data) => setBeds(data.map(mapCama)))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
   const stats = useMemo(() => {
     const disponibles = beds.filter((item) => item.estado === "disponible").length;
@@ -24,15 +37,40 @@ export function CamasPage() {
   const availableBeds = beds.filter((item) => item.estado === "disponible");
 
   const updateBed = (id, changes) => {
+    const apiChanges = {};
+    if (changes.estado) apiChanges.estado = changes.estado.charAt(0).toUpperCase() + changes.estado.slice(1);
+    if (changes.paciente && changes.paciente !== "-") apiChanges.paciente_nombre = changes.paciente;
+    if (changes.paciente === "-") apiChanges.paciente_nombre = "";
+    if (changes.nivel) apiChanges.nivel_cuidado = changes.nivel.charAt(0).toUpperCase() + changes.nivel.slice(1);
+
+    const bed = beds.find((b) => b.id === id);
+    if (bed?._api?.id) {
+      updateCama(bed._api.id, apiChanges).catch(() => {});
+    }
+
     setBeds((current) => current.map((bed) => (bed.id === id ? { ...bed, ...changes } : bed)));
     setSelectedBed(null);
   };
 
   const saveIngreso = () => {
     if (!form.nombre || !form.edad || !form.peso || !form.cama) return;
-    updateBed(form.cama, { estado: "ocupada", nivel: form.nivel, paciente: `${form.nombre} (${form.edad} años, ${form.peso}kg)` });
+    const bed = beds.find((b) => b.id === form.cama);
+    if (bed?._api?.id) {
+      updateCama(bed._api.id, {
+        estado: "Ocupada",
+        paciente_nombre: `${form.nombre} (${form.edad} años, ${form.peso}kg)`,
+        nivel_cuidado: form.nivel.charAt(0).toUpperCase() + form.nivel.slice(1),
+      }).catch(() => {});
+    }
+    updateBed(form.cama, {
+      estado: "ocupada",
+      nivel: form.nivel,
+      paciente: `${form.nombre} (${form.edad} años, ${form.peso}kg)`,
+    });
     setForm({ nombre: "", edad: "", peso: "", nivel: "media", cama: "" });
   };
+
+  if (loading) return <AppShell title="Gestión de Camas">Cargando...</AppShell>;
 
   return (
     <AppShell title="Gestión de Camas" actions={<button className="btn small primary" type="button" onClick={() => setSelectedBed({ id: "new" })}>+ Nuevo ingreso</button>}>
