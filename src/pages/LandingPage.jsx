@@ -17,6 +17,7 @@ export function LandingPage() {
   return (
     <div className="landing-page">
       <section className="landing-hero">
+        <div className="landing-hero-bg" />
         <div className="floating-shapes">
           <div className="shape shape-1" />
           <div className="shape shape-2" />
