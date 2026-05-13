@@ -276,6 +276,11 @@
   outline: none;
 }
 
+.input-wrapper input[type="password"],
+input[autocomplete="current-password"] {
+  padding-right: 44px;
+}
+
 .input-wrapper input::placeholder {
   color: rgba(255, 255, 255, 0.2);
 }
@@ -472,6 +477,56 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* ========================= */
+/* PASSWORD TOGGLE */
+/* ========================= */
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  border-radius: 8px;
+}
+
+.password-toggle:hover {
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ========================= */
+/* INPUT ERROR STATE */
+/* ========================= */
+.input-wrapper.input-error input {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  background: rgba(239, 68, 68, 0.06) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.input-wrapper.input-error .input-icon {
+  color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.input-feedback {
+  font-size: 12px;
+  color: #fca5a5;
+  margin-top: 4px;
+  display: block;
+  animation: shake 0.35s ease;
+}
+
+.input-feedback::before {
+  content: "⚠ ";
 }
 
 @media (max-width: 900px) {
