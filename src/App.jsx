@@ -14,6 +14,7 @@ import { ConfiguracionPage } from "./pages/ConfiguracionPage";
 import { IndicadoresServiciosClinicosPage } from "./pages/IndicadoresServiciosClinicosPage";
 import { Visor3DPage } from "./pages/Visor3DPage";
 import { CalculadoraPage } from "./pages/CalculadoraPage";
+import { HubPage } from "./pages/HubPage";
 
 export default function App() {
   const [splashDone, setSplashDone] = useState(() => sessionStorage.getItem("splash") === "1");
@@ -32,6 +33,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/hub" element={<ProtectedRoute><HubPage /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="/rem" element={<ProtectedRoute><RemPage /></ProtectedRoute>} />
         <Route path="/rem/oportunidad-hospitalizacion" element={<ProtectedRoute><OportunidadHospitalizacionPage /></ProtectedRoute>} />
