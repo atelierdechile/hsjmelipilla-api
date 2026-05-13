@@ -1,3 +1,5 @@
+import * as api from "./api";
+
 export const AUTH_KEYS = {
   auth: "auth",
   user: "user",
@@ -13,11 +15,25 @@ const USERS = [
   { user: "enfermera", pass: "1234", rol: "enfermeria" },
 ];
 
-export function loginWithCredentials(user, pass) {
+export async function loginWithCredentials(user, pass) {
   const found = USERS.find((item) => item.user === user && item.pass === pass);
   if (!found) return null;
   setSession(found);
   return found;
+}
+
+export async function loginReal(username, password) {
+  try {
+    const data = await api.login(username, password);
+    if (data.mensaje === "Sesión iniciada") {
+      const meData = await api.me();
+      setSession({ user: meData.user, rol: "admin" });
+      return { user: meData.user, rol: "admin" };
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }
 
 export function demoLogin(role) {

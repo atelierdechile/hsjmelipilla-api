@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { demoLogin, loginWithCredentials } from "../lib/auth";
+import { demoLogin, loginWithCredentials, loginReal } from "../lib/auth";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -20,10 +20,16 @@ export function LoginPage() {
       return;
     }
     setLoading(true);
+    const result = await loginReal(user.trim(), pass.trim());
+    if (result) {
+      setLoading(false);
+      navigate(destination, { replace: true });
+      return;
+    }
     await new Promise((resolve) => setTimeout(resolve, 400));
-    const result = loginWithCredentials(user.trim(), pass.trim());
+    const mock = loginWithCredentials(user.trim(), pass.trim());
     setLoading(false);
-    if (!result) {
+    if (!mock) {
       setError("Credenciales incorrectas");
       return;
     }

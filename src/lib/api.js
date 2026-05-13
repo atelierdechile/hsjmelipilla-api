@@ -1,9 +1,24 @@
 const API_URL = import.meta.env.VITE_API_URL || "https://api-hospital-melipilla.onrender.com/api";
 
+function getCSRFToken() {
+  const name = "csrftoken=";
+  const decoded = decodeURIComponent(document.cookie);
+  for (const cookie of decoded.split(";")) {
+    const c = cookie.trim();
+    if (c.startsWith(name)) return c.substring(name.length);
+  }
+  return "";
+}
+
 async function request(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
+  const headers = { "Content-Type": "application/json", ...options.headers };
+  if (options.method && ["POST", "PUT", "PATCH", "DELETE"].includes(options.method)) {
+    headers["X-CSRFToken"] = getCSRFToken();
+  }
   const res = await fetch(url, {
-    headers: { "Content-Type": "application/json", ...options.headers },
+    headers,
+    credentials: "include",
     ...options,
   });
   if (!res.ok) {
@@ -11,6 +26,21 @@ async function request(endpoint, options = {}) {
     throw new Error(msg.error || msg.detail || `Error ${res.status}`);
   }
   return res.json();
+}
+
+export function login(username, password) {
+  return request("/auth/login/", {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+  });
+}
+
+export function logout() {
+  return request("/auth/logout/", { method: "POST" });
+}
+
+export function me() {
+  return request("/auth/me/");
 }
 
 export function getNiveles() {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { clearSession, getSession } from "../lib/auth";
+import * as api from "../lib/api";
 import { isDarkModeEnabled, readConfig, setDarkMode } from "../lib/theme";
 
 const ICONS = {
@@ -69,6 +70,7 @@ export function AppShell({ title, status = "En tiempo real", children, actions }
   }, []);
 
   const handleLogout = () => {
+    api.logout().catch(() => {});
     clearSession();
     setMenuOpen(false);
     navigate("/login", { replace: true });
