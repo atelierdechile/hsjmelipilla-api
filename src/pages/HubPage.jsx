@@ -40,19 +40,6 @@ const cards = [
       </svg>
     ),
   },
-  {
-    label: "Hospital API",
-    desc: "Datos y servicios desde la API del hospital",
-    path: "https://hsjmelipilla.onrender.com/",
-    color: "#f59e0b",
-    glow: "rgba(245,158,11,0.3)",
-    action: "external",
-    icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-      </svg>
-    ),
-  },
 ];
 
 export function HubPage() {
