@@ -43,7 +43,7 @@ const cards = [
   {
     label: "Admin API",
     desc: "Panel de administración de la base de datos",
-    path: "https://api-hospital-melipilla.onrender.com/admin/",
+    path: "https://hsjmelipilla.onrender.com/admin/",
     color: "#f59e0b",
     glow: "rgba(245,158,11,0.3)",
     action: "external",
