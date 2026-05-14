@@ -1,4 +1,13 @@
-node_modules/
-dist/
-.DS_Store
-*.log
+# Entornos virtuales
+venv/
+env/
+
+# Variables de entorno
+.env
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Base de datos local (por si acaso)
+db.sqlite3
