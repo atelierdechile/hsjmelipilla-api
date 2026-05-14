@@ -33,9 +33,23 @@ const cards = [
     path: "/visor-3d",
     color: "#10b981",
     glow: "rgba(16,185,129,0.3)",
+    action: "navigate",
     icon: (
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" /><line x1="8" y1="2" x2="8" y2="18" /><line x1="16" y1="6" x2="16" y2="22" />
+      </svg>
+    ),
+  },
+  {
+    label: "Hospital API",
+    desc: "Datos y servicios desde la API del hospital",
+    path: "https://hsjmelipilla.onrender.com/",
+    color: "#f59e0b",
+    glow: "rgba(245,158,11,0.3)",
+    action: "external",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
       </svg>
     ),
   },
@@ -70,7 +84,7 @@ export function HubPage() {
               key={card.path}
               className="hub-card"
               style={{ animationDelay: `${0.15 + i * 0.12}s` }}
-              onClick={() => navigate(card.path)}
+              onClick={() => card.action === "external" ? window.open(card.path, "_blank", "noopener") : navigate(card.path)}
             >
               <div className="hub-card-icon" style={{ color: card.color, boxShadow: `0 0 20px ${card.glow}` }}>
                 {card.icon}
